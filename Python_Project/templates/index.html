@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ProjectOps Studio - Python Flask CRUD dashboard by DevOps Shack">
+  <title>ProjectOps Studio | Python</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/"><span class="brand-mark">Py</span><span><strong>DevOps Shack</strong><small>ProjectOps Studio</small></span></a>
+      <nav class="nav-list">
+        <button class="nav-item active" data-scroll="dashboard">◈ Dashboard</button>
+        <button class="nav-item" data-scroll="projects">▦ Projects</button>
+        <button class="nav-item" data-open-create>＋ New Project</button>
+        <a class="nav-item" href="/studio">⌘ Database Studio</a>
+        <a class="nav-item" href="/api-docs">{ } REST API</a>
+      </nav>
+      <div class="runtime-card">
+        <div class="python-badge"><span>&gt;_</span></div>
+        <strong>Python Edition</strong>
+        <p>Flask backend + built-in sqlite3 persistence.</p>
+        <span class="live-dot"><i></i> Local environment</span>
+      </div>
+      <div class="sidebar-footer"><span>DEVOPS SHACK</span><small>Learn • Build • Automate • Master</small></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-row"><button class="icon-btn menu-btn" id="menuButton">☰</button><div><p class="eyebrow">PYTHON PROJECT CONTROL</p><h1>Project engineering, simplified.</h1></div></div>
+        <div class="top-actions"><a class="ghost-btn" href="/api-docs">API Docs</a><button class="primary-btn" data-open-create>＋ Add Project</button></div>
+      </header>
+
+      <section class="hero" id="dashboard">
+        <div class="hero-copy">
+          <span class="pill"><i></i> PYTHON • FLASK • SQLITE</span>
+          <h2>Plan. Build. Track.<br><em>Ship with clarity.</em></h2>
+          <p>A complete Python CRUD application for managing DevOps projects with persistent SQLite data, validation, filters, metrics and REST APIs.</p>
+          <div class="hero-actions"><button class="primary-btn large" data-open-create>Create project →</button><a class="text-link" href="/studio">Inspect SQLite ↗</a></div>
+        </div>
+        <div class="hero-visual">
+          <div class="terminal-card">
+            <div class="terminal-top"><span></span><span></span><span></span><b>app.py</b></div>
+            <pre><code><strong>from</strong> projectops <strong>import</strong> create_app
+
+app = create_app()
+
+<span>runtime</span> = "Python"
+<span>framework</span> = "Flask"
+<span>database</span> = "SQLite"</code></pre>
+          </div>
+          <div class="float-tag tag-one">FLASK <b>API</b></div>
+          <div class="float-tag tag-two">SQLITE <b>●</b></div>
+        </div>
+      </section>
+
+      <section class="metric-grid">
+        <article class="metric-card"><span class="metric-icon">01</span><div><small>Total Projects</small><strong id="statTotal">—</strong><p>All tracked work</p></div></article>
+        <article class="metric-card"><span class="metric-icon">02</span><div><small>Active</small><strong id="statActive">—</strong><p>In execution</p></div></article>
+        <article class="metric-card"><span class="metric-icon">03</span><div><small>Completed</small><strong id="statCompleted">—</strong><p>Successfully shipped</p></div></article>
+        <article class="metric-card"><span class="metric-icon">04</span><div><small>Advanced</small><strong id="statAdvanced">—</strong><p>Deep-dive projects</p></div></article>
+        <article class="metric-card"><span class="metric-icon">05</span><div><small>Categories</small><strong id="statCategories">—</strong><p>Technology areas</p></div></article>
+      </section>
+
+      <section class="workspace" id="projects">
+        <div class="section-heading"><div><p class="eyebrow">PROJECT CATALOG</p><h2>Engineering workspace</h2></div><div class="view-toggle"><button class="active" data-view="cards">▦</button><button data-view="table">☷</button></div></div>
+        <div class="filter-bar">
+          <label class="search-box">⌕ <input id="searchInput" type="search" placeholder="Search title, owner or description..."></label>
+          <select id="statusFilter"><option value="">All statuses</option></select>
+          <select id="categoryFilter"><option value="">All categories</option></select>
+          <select id="difficultyFilter"><option value="">All difficulties</option></select>
+          <button class="clear-btn" id="clearFilters" type="button">Clear</button>
+        </div>
+        <div class="results-meta"><span id="resultCount">Loading projects…</span><span class="sync-status"><i></i> SQLite synced</span></div>
+        <div id="projectCards" class="project-grid"></div>
+        <div id="projectTableWrap" class="table-wrap hidden"><table class="project-table"><thead><tr><th>Project</th><th>Category</th><th>Difficulty</th><th>Status</th><th>Owner</th><th></th></tr></thead><tbody id="projectTableBody"></tbody></table></div>
+        <div id="emptyState" class="empty-state hidden"><span>⌕</span><h3>No projects found</h3><p>Try clearing filters or create a new project.</p><button class="primary-btn" data-open-create>Create project</button></div>
+      </section>
+
+      <section class="insight-grid">
+        <article class="insight-panel"><div class="panel-title"><div><p class="eyebrow">DELIVERY SNAPSHOT</p><h3>Status distribution</h3></div><span>Live</span></div><div id="statusBars" class="bars"></div></article>
+        <article class="insight-panel api-panel"><div class="api-badge">GET</div><div><p class="eyebrow">FLASK REST API</p><h3>/api/projects</h3><p>The UI and external clients use the same project data.</p><a href="/api-docs">Explore endpoints →</a></div></article>
+      </section>
+      <footer class="footer"><span>ProjectOps Studio • Python Edition</span><span>DevOps Shack</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="projectModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header"><div><p class="eyebrow">PROJECT RECORD</p><h2 id="modalTitle">Create project</h2></div><button class="icon-btn" id="closeModal">×</button></div>
+      <form id="projectForm" novalidate>
+        <input type="hidden" id="projectId">
+        <div class="form-grid">
+          <label class="field full"><span>Project title *</span><input id="title" maxlength="120" required placeholder="e.g. Production GitOps Platform"><small data-error="title"></small></label>
+          <label class="field"><span>Category *</span><select id="category" required></select><small data-error="category"></small></label>
+          <label class="field"><span>Difficulty *</span><select id="difficulty" required></select><small data-error="difficulty"></small></label>
+          <label class="field"><span>Status *</span><select id="status" required></select><small data-error="status"></small></label>
+          <label class="field"><span>Owner *</span><input id="owner" maxlength="80" required placeholder="DevOps Shack"><small data-error="owner"></small></label>
+          <label class="field full"><span>Repository URL</span><input id="repository_url" type="url" placeholder="https://github.com/..."><small data-error="repository_url"></small></label>
+          <label class="field full"><span>Description *</span><textarea id="description" rows="5" maxlength="800" required></textarea><small data-error="description"></small></label>
+        </div>
+        <div class="modal-actions"><button type="button" class="ghost-btn" id="cancelModal">Cancel</button><button type="submit" class="primary-btn" id="saveButton">Save Project</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-backdrop hidden" id="deleteModal" role="dialog" aria-modal="true"><div class="confirm-card"><span class="danger-icon">!</span><h2>Delete project?</h2><p>This permanently removes <strong id="deleteProjectName"></strong> from SQLite.</p><div class="modal-actions"><button class="ghost-btn" id="cancelDelete">Keep Project</button><button class="danger-btn" id="confirmDelete">Delete</button></div></div></div>
+  <div class="toast-stack" id="toastStack"></div>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

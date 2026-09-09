@@ -1,0 +1,11 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>REST API | Python ProjectOps</title><link rel="stylesheet" href="/static/css/styles.css"></head>
+<body class="subpage-body"><header class="subpage-topbar"><a class="brand" href="/"><span class="brand-mark">Py</span><span><strong>DevOps Shack</strong><small>ProjectOps Studio</small></span></a><nav><a href="/">Dashboard</a><a href="/studio">Database Studio</a><a class="active" href="/api-docs">REST API</a></nav></header>
+<main class="subpage-main api-docs-main"><section class="page-intro"><span class="pill"><i></i> FLASK REST API</span><h1>Project API</h1><p>Use these endpoints to manage the same project records shown in the browser dashboard.</p></section><section class="endpoint-list">
+<div class="endpoint"><span class="method get">GET</span><code>/api/projects</code><p>List projects. Supports search, status, category and difficulty filters.</p></div>
+<div class="endpoint"><span class="method get">GET</span><code>/api/projects/:id</code><p>Get one project.</p></div>
+<div class="endpoint"><span class="method post">POST</span><code>/api/projects</code><p>Create a project.</p></div>
+<div class="endpoint"><span class="method put">PUT</span><code>/api/projects/:id</code><p>Update a project.</p></div>
+<div class="endpoint"><span class="method delete">DELETE</span><code>/api/projects/:id</code><p>Delete a project.</p></div>
+<div class="endpoint"><span class="method get">GET</span><code>/api/stats</code><p>Dashboard metrics.</p></div>
+<div class="endpoint"><span class="method get">GET</span><code>/health</code><p>Application health check.</p></div></section>
+<section class="curl-card"><p class="eyebrow">EXAMPLE</p><h2>Read projects</h2><pre>curl http://localhost:5000/api/projects</pre></section></main></body></html>
