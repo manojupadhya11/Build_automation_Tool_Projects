@@ -1,0 +1,10 @@
+services:
+  projectops-dotnet:
+    build: .
+    ports:
+      - "5100:8080"
+    volumes:
+      - ./src/DevOpsShack.ProjectOps/data:/app/data
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      Database__Path: /app/data/devopsshack.db

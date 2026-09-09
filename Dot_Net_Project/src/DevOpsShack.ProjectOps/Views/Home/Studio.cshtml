@@ -1,0 +1,72 @@
+@model IReadOnlyList<ProjectItem>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Database Studio | ProjectOps .NET</title>
+  <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body class="subpage-body">
+  <header class="subpage-topbar">
+    <a class="brand" href="/"><span class="brand-mark">.N</span><span><strong>DevOps Shack</strong><small>ProjectOps Studio</small></span></a>
+    <nav><a href="/">Dashboard</a><a class="active" href="/studio">Database Studio</a><a href="/api-docs">REST API</a></nav>
+  </header>
+  <main class="subpage-main">
+    <section class="page-intro studio-intro">
+      <span class="pill"><i></i> SQLITE DATABASE</span>
+      <h1>Database Studio</h1>
+      <p>Safely inspect the same persistent SQLite database used by the ASP.NET Core application. This page is intentionally read-only—no arbitrary SQL endpoint is exposed.</p>
+      <div class="studio-stats">
+        <div><small>Database file</small><code>@ViewBag.DatabasePath</code></div>
+        <div><small>Table</small><strong>projects</strong></div>
+        <div><small>Rows</small><strong>@ViewBag.RowCount</strong></div>
+      </div>
+    </section>
+
+    <section class="studio-card wide-card">
+      <div class="panel-title"><div><p class="eyebrow">PROJECT TABLE</p><h3>Stored records</h3></div><span>Read only</span></div>
+      <div class="query-scroll">
+        <table class="project-table">
+          <thead><tr><th>ID</th><th>Title</th><th>Category</th><th>Difficulty</th><th>Status</th><th>Owner</th><th>Updated</th></tr></thead>
+          <tbody>
+          @foreach (var project in Model)
+          {
+            <tr>
+              <td>@project.Id</td>
+              <td><strong>@project.Title</strong></td>
+              <td>@project.Category</td>
+              <td>@project.Difficulty</td>
+              <td><span class="status-chip">@project.Status</span></td>
+              <td>@project.Owner</td>
+              <td>@project.UpdatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+            </tr>
+          }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="schema-grid">
+      <article class="studio-card"><p class="eyebrow">SCHEMA</p><h3>projects table</h3><pre class="schema-code">id               INTEGER PRIMARY KEY
+
+title            TEXT NOT NULL
+category         TEXT NOT NULL
+difficulty       TEXT NOT NULL
+status           TEXT NOT NULL
+owner            TEXT NOT NULL
+description      TEXT NOT NULL
+repository_url   TEXT
+created_at       DATETIME
+updated_at       DATETIME</pre></article>
+      <article class="studio-card"><p class="eyebrow">TERMINAL ACCESS</p><h3>Inspect with sqlite3</h3><pre class="schema-code">sqlite3 data/devopsshack.db
+.tables
+.schema projects
+.headers on
+.mode column
+SELECT * FROM projects;
+.quit</pre></article>
+    </section>
+  </main>
+</body>
+</html>

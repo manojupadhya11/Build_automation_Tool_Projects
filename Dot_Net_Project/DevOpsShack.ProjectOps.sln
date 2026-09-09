@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOpsShack.ProjectOps", "src\DevOpsShack.ProjectOps\DevOpsShack.ProjectOps.csproj", "{9DB95C5F-0D1F-4AF3-920A-8D12A35942D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevOpsShack.ProjectOps.Tests", "tests\DevOpsShack.ProjectOps.Tests\DevOpsShack.ProjectOps.Tests.csproj", "{42D3A7AD-F062-4B40-9A49-36E4B41C77E7}"
+EndProject
+Global
+    GlobalSection(SolutionConfigurationPlatforms) = preSolution
+        Debug|Any CPU = Debug|Any CPU
+        Release|Any CPU = Release|Any CPU
+    EndGlobalSection
+    GlobalSection(ProjectConfigurationPlatforms) = postSolution
+        {9DB95C5F-0D1F-4AF3-920A-8D12A35942D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {9DB95C5F-0D1F-4AF3-920A-8D12A35942D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {9DB95C5F-0D1F-4AF3-920A-8D12A35942D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {9DB95C5F-0D1F-4AF3-920A-8D12A35942D1}.Release|Any CPU.Build.0 = Release|Any CPU
+        {42D3A7AD-F062-4B40-9A49-36E4B41C77E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+        {42D3A7AD-F062-4B40-9A49-36E4B41C77E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+        {42D3A7AD-F062-4B40-9A49-36E4B41C77E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {42D3A7AD-F062-4B40-9A49-36E4B41C77E7}.Release|Any CPU.Build.0 = Release|Any CPU
+    EndGlobalSection
+EndGlobal

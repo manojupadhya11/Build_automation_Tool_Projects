@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>REST API | ProjectOps .NET</title>
+  <link rel="stylesheet" href="/css/site.css" />
+</head>
+<body class="subpage-body">
+  <header class="subpage-topbar">
+    <a class="brand" href="/"><span class="brand-mark">.N</span><span><strong>DevOps Shack</strong><small>ProjectOps Studio</small></span></a>
+    <nav><a href="/">Dashboard</a><a href="/studio">Database Studio</a><a class="active" href="/api-docs">REST API</a></nav>
+  </header>
+  <main class="subpage-main api-docs-main">
+    <section class="page-intro">
+      <span class="pill"><i></i> ASP.NET CORE REST API</span>
+      <h1>Project API</h1>
+      <p>The same CRUD operations used by the browser UI are available as JSON endpoints.</p>
+    </section>
+
+    <section class="endpoint-list">
+      <article class="endpoint"><span class="method get">GET</span><code>/api/projects</code><p>List projects. Supports search, status, category and difficulty query parameters.</p></article>
+      <article class="endpoint"><span class="method get">GET</span><code>/api/projects/{id}</code><p>Get one project.</p></article>
+      <article class="endpoint"><span class="method post">POST</span><code>/api/projects</code><p>Create a project.</p></article>
+      <article class="endpoint"><span class="method put">PUT</span><code>/api/projects/{id}</code><p>Update a project.</p></article>
+      <article class="endpoint"><span class="method delete">DELETE</span><code>/api/projects/{id}</code><p>Delete a project.</p></article>
+      <article class="endpoint"><span class="method get">GET</span><code>/api/stats</code><p>Dashboard statistics.</p></article>
+      <article class="endpoint"><span class="method get">GET</span><code>/api/metadata</code><p>Valid categories, statuses and difficulties.</p></article>
+      <article class="endpoint"><span class="method get">GET</span><code>/health</code><p>Application health endpoint.</p></article>
+    </section>
+
+    <section class="curl-card"><p class="eyebrow">EXAMPLE</p><h2>Create a project</h2><pre>curl -X POST http://localhost:5100/api/projects \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title":"GitOps Delivery Platform",
+    "category":"GitOps",
+    "difficulty":"Advanced",
+    "status":"Active",
+    "owner":"DevOps Shack",
+    "description":"Build a GitOps delivery platform with controlled promotion and rollback.",
+    "repository_url":"https://github.com/jaiswaladi246"
+  }'</pre></section>
+  </main>
+</body>
+</html>

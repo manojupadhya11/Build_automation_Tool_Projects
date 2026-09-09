@@ -1,0 +1,10 @@
+**/bin/
+**/obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.db-shm
+*.db-wal
+src/DevOpsShack.ProjectOps/data/devopsshack.db
+.env
