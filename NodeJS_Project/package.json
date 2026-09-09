@@ -1,0 +1,31 @@
+{
+  "name": "devops-shack-node-projectops",
+  "version": "1.0.0",
+  "description": "ProjectOps Studio - Node.js + Express + SQLite CRUD dashboard by DevOps Shack",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test",
+    "check": "node --check src/server.js && node --check src/app.js && node --check src/services/projectService.js && node --check public/js/app.js",
+    "verify": "npm run check && npm test"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "sqlite",
+    "crud",
+    "devops",
+    "rest-api",
+    "project-management"
+  ],
+  "author": "DevOps Shack",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

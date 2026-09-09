@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ProjectOps Studio - Node.js CRUD dashboard by DevOps Shack">
+  <title>ProjectOps Studio | Node.js</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="/">
+        <span class="brand-mark">DS</span>
+        <span><strong>DevOps Shack</strong><small>ProjectOps Studio</small></span>
+      </a>
+
+      <nav class="nav-list" aria-label="Primary navigation">
+        <button class="nav-item active" data-scroll="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-scroll="projects"><span>▦</span> Projects</button>
+        <button class="nav-item" data-open-create><span>＋</span> New Project</button>
+        <a class="nav-item" href="/studio"><span>⌘</span> Database Studio</a>
+        <a class="nav-item" href="/api-docs"><span>{ }</span> REST API</a>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="node-orbit"><span>JS</span></div>
+        <strong>Node.js Edition</strong>
+        <p>Express backend + persistent SQLite storage.</p>
+        <span class="live-dot"><i></i> Local environment</span>
+      </div>
+
+      <div class="sidebar-footer">
+        <span>DEVOPS SHACK</span>
+        <small>Learn • Build • Automate • Master</small>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-row">
+          <button class="icon-btn menu-btn" id="menuButton" aria-label="Toggle menu">☰</button>
+          <div>
+            <p class="eyebrow">PROJECT OPERATIONS</p>
+            <h1>Engineering projects, in one control plane.</h1>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a class="ghost-btn" href="/api-docs">API Docs</a>
+          <button class="primary-btn" data-open-create><span>＋</span> Add Project</button>
+        </div>
+      </header>
+
+      <section class="hero" id="dashboard">
+        <div>
+          <span class="pill"><i></i> NODE.JS 22 • EXPRESS • SQLITE</span>
+          <h2>Build. Track. Ship.<br><em>Repeat with confidence.</em></h2>
+          <p>Manage hands-on DevOps projects with complete CRUD operations, persistent data, filters, metrics and REST APIs.</p>
+          <div class="hero-actions">
+            <button class="primary-btn large" data-open-create>Create a project <span>→</span></button>
+            <a class="text-link" href="/studio">Open Database Studio <span>↗</span></a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="code-window">
+            <div class="window-top"><i></i><i></i><i></i><span>projectops.js</span></div>
+            <pre><code><b>const</b> project = {
+  runtime: <span>'Node.js'</span>,
+  api: <span>'Express'</span>,
+  database: <span>'SQLite'</span>,
+  status: <em>'shipping'</em>
+};</code></pre>
+          </div>
+          <div class="floating-chip chip-one">REST API <strong>200</strong></div>
+          <div class="floating-chip chip-two">SQLite <strong>●</strong></div>
+        </div>
+      </section>
+
+      <section class="metric-grid" aria-label="Project metrics">
+        <article class="metric-card"><span class="metric-icon">▦</span><div><small>Total Projects</small><strong id="statTotal">—</strong><p>All tracked work</p></div></article>
+        <article class="metric-card"><span class="metric-icon active-icon">↗</span><div><small>Active</small><strong id="statActive">—</strong><p>In execution</p></div></article>
+        <article class="metric-card"><span class="metric-icon done-icon">✓</span><div><small>Completed</small><strong id="statCompleted">—</strong><p>Successfully shipped</p></div></article>
+        <article class="metric-card"><span class="metric-icon advanced-icon">◆</span><div><small>Advanced</small><strong id="statAdvanced">—</strong><p>Deep-dive projects</p></div></article>
+        <article class="metric-card"><span class="metric-icon category-icon">#</span><div><small>Categories</small><strong id="statCategories">—</strong><p>Technology areas</p></div></article>
+      </section>
+
+      <section class="workspace" id="projects">
+        <div class="section-heading">
+          <div><p class="eyebrow">PROJECT CATALOG</p><h2>Everything you're building</h2></div>
+          <div class="view-toggle" role="group" aria-label="Project view"><button class="active" data-view="cards">▦</button><button data-view="table">☷</button></div>
+        </div>
+
+        <div class="filter-bar">
+          <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search title, owner or description..."></label>
+          <select id="statusFilter"><option value="">All statuses</option></select>
+          <select id="categoryFilter"><option value="">All categories</option></select>
+          <select id="difficultyFilter"><option value="">All difficulties</option></select>
+          <button class="clear-btn" id="clearFilters" type="button">Clear</button>
+        </div>
+
+        <div class="results-meta"><span id="resultCount">Loading projects…</span><span class="sync-status"><i></i> SQLite synced</span></div>
+        <div id="projectCards" class="project-grid"></div>
+        <div id="projectTableWrap" class="table-wrap hidden">
+          <table class="project-table">
+            <thead><tr><th>Project</th><th>Category</th><th>Difficulty</th><th>Status</th><th>Owner</th><th></th></tr></thead>
+            <tbody id="projectTableBody"></tbody>
+          </table>
+        </div>
+        <div id="emptyState" class="empty-state hidden"><span>⌕</span><h3>No projects found</h3><p>Try clearing your filters or create a new project.</p><button class="primary-btn" data-open-create>Create project</button></div>
+      </section>
+
+      <section class="insight-grid">
+        <article class="insight-panel">
+          <div class="panel-title"><div><p class="eyebrow">DELIVERY SNAPSHOT</p><h3>Status distribution</h3></div><span>Live</span></div>
+          <div id="statusBars" class="bars"></div>
+        </article>
+        <article class="insight-panel api-panel">
+          <div class="api-badge">GET</div>
+          <div><p class="eyebrow">REST READY</p><h3>/api/projects</h3><p>Use the same data through the browser UI or programmatically through the REST API.</p><a href="/api-docs">Explore endpoints →</a></div>
+        </article>
+      </section>
+
+      <footer class="footer"><span>ProjectOps Studio • Node.js Edition</span><span>DevOps Shack</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header"><div><p class="eyebrow">PROJECT RECORD</p><h2 id="modalTitle">Create project</h2></div><button class="icon-btn" id="closeModal" aria-label="Close">×</button></div>
+      <form id="projectForm" novalidate>
+        <input type="hidden" id="projectId">
+        <div class="form-grid">
+          <label class="field full"><span>Project title *</span><input id="title" name="title" maxlength="120" required placeholder="e.g. Production GitOps Platform"><small data-error="title"></small></label>
+          <label class="field"><span>Category *</span><select id="category" name="category" required></select><small data-error="category"></small></label>
+          <label class="field"><span>Difficulty *</span><select id="difficulty" name="difficulty" required></select><small data-error="difficulty"></small></label>
+          <label class="field"><span>Status *</span><select id="status" name="status" required></select><small data-error="status"></small></label>
+          <label class="field"><span>Owner *</span><input id="owner" name="owner" maxlength="80" required placeholder="DevOps Shack"><small data-error="owner"></small></label>
+          <label class="field full"><span>Repository URL</span><input id="repository_url" name="repository_url" type="url" placeholder="https://github.com/..."><small data-error="repository_url"></small></label>
+          <label class="field full"><span>Description *</span><textarea id="description" name="description" rows="5" maxlength="800" required placeholder="What will this project build and demonstrate?"></textarea><small data-error="description"></small></label>
+        </div>
+        <div class="modal-actions"><button type="button" class="ghost-btn" id="cancelModal">Cancel</button><button type="submit" class="primary-btn" id="saveButton">Save Project</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteTitle">
+    <div class="confirm-card">
+      <span class="danger-icon">!</span><h2 id="deleteTitle">Delete project?</h2><p>This permanently removes <strong id="deleteProjectName"></strong> from SQLite.</p>
+      <div class="modal-actions"><button type="button" class="ghost-btn" id="cancelDelete">Keep Project</button><button type="button" class="danger-btn" id="confirmDelete">Delete</button></div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="/js/app.js"></script>
+</body>
+</html>

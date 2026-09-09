@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>REST API | ProjectOps Node.js</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="subpage-body">
+  <header class="subpage-topbar">
+    <a class="brand" href="/"><span class="brand-mark">DS</span><span><strong>DevOps Shack</strong><small>ProjectOps Studio</small></span></a>
+    <nav><a href="/">Dashboard</a><a href="/studio">Database Studio</a><a class="active" href="/api-docs">REST API</a></nav>
+  </header>
+  <main class="subpage-main api-docs-main">
+    <section class="page-intro"><span class="pill"><i></i> EXPRESS REST API</span><h1>Project API</h1><p>The browser dashboard and external clients use the same project data and validation rules.</p></section>
+
+    <section class="endpoint-list">
+      <article class="endpoint"><span class="method get">GET</span><code>/api/projects</code><p>List projects. Optional query params: <b>search</b>, <b>status</b>, <b>category</b>, <b>difficulty</b>.</p></article>
+      <article class="endpoint"><span class="method get">GET</span><code>/api/projects/:id</code><p>Fetch one project by ID.</p></article>
+      <article class="endpoint"><span class="method post">POST</span><code>/api/projects</code><p>Create a project with validation.</p></article>
+      <article class="endpoint"><span class="method put">PUT</span><code>/api/projects/:id</code><p>Replace editable project fields.</p></article>
+      <article class="endpoint"><span class="method delete">DELETE</span><code>/api/projects/:id</code><p>Delete a project permanently.</p></article>
+      <article class="endpoint"><span class="method get">GET</span><code>/api/stats</code><p>Dashboard metrics and grouped status/category counts.</p></article>
+      <article class="endpoint"><span class="method get">GET</span><code>/health</code><p>Application health endpoint.</p></article>
+    </section>
+
+    <section class="curl-card">
+      <p class="eyebrow">EXAMPLES</p><h2>Try it with curl</h2>
+      <pre><code>curl http://localhost:3000/api/projects
+
+curl "http://localhost:3000/api/projects?status=Active"
+
+curl -X POST http://localhost:3000/api/projects \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title":"GitOps Production Platform",
+    "category":"GitOps",
+    "difficulty":"Advanced",
+    "status":"Planned",
+    "owner":"DevOps Shack",
+    "description":"Build a production GitOps workflow using Argo CD.",
+    "repository_url":"https://github.com/jaiswaladi246"
+  }'</code></pre>
+    </section>
+  </main>
+</body>
+</html>

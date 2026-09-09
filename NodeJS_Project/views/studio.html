@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Database Studio | ProjectOps Node.js</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="subpage-body">
+  <header class="subpage-topbar">
+    <a class="brand" href="/"><span class="brand-mark">DS</span><span><strong>DevOps Shack</strong><small>ProjectOps Studio</small></span></a>
+    <nav><a href="/">Dashboard</a><a class="active" href="/studio">Database Studio</a><a href="/api-docs">REST API</a></nav>
+  </header>
+
+  <main class="subpage-main">
+    <section class="page-intro studio-intro">
+      <span class="pill"><i></i> SQLITE DATABASE</span>
+      <h1>Database Studio</h1>
+      <p>A read-only SQL workspace for inspecting the persistent project database—your Node.js counterpart to the Java application's H2 console.</p>
+      <div class="studio-stats">
+        <div><small>Database file</small><code>{{DB_PATH}}</code></div>
+        <div><small>Projects table rows</small><strong>{{ROW_COUNT}}</strong></div>
+        <div><small>Access mode</small><strong>Read only</strong></div>
+      </div>
+    </section>
+
+    <section class="studio-layout">
+      <article class="studio-card query-card">
+        <div class="panel-title"><div><p class="eyebrow">SQL WORKSPACE</p><h2>Run a read-only query</h2></div><span>SELECT only</span></div>
+        <form method="post" action="/studio/query">
+          <textarea class="sql-editor" name="query" spellcheck="false">{{QUERY_VALUE}}</textarea>
+          <div class="query-actions"><small>Allowed: SELECT and PRAGMA table_info(...)</small><button class="primary-btn" type="submit">Run Query ▶</button></div>
+        </form>
+        <div class="query-result">{{QUERY_RESULT}}</div>
+      </article>
+
+      <article class="studio-card schema-card">
+        <div class="panel-title"><div><p class="eyebrow">SCHEMA</p><h2>projects</h2></div><span>SQLite</span></div>
+        <div class="query-scroll">
+          <table class="studio-table"><thead><tr><th>#</th><th>Column</th><th>Type</th><th>Required</th><th>PK</th></tr></thead><tbody>{{SCHEMA_ROWS}}</tbody></table>
+        </div>
+        <div class="quick-queries">
+          <p>Useful queries</p>
+          <code>SELECT * FROM projects;</code>
+          <code>SELECT * FROM projects WHERE status = 'Active';</code>
+          <code>SELECT category, COUNT(*) FROM projects GROUP BY category;</code>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,16 @@
+services:
+  projectops-node:
+    build: .
+    container_name: devopsshack-node-projectops
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+      DB_PATH: /app/data/devopsshack.db
+    volumes:
+      - projectops_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  projectops_data:
