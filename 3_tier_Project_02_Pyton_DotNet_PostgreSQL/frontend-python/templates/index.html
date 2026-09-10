@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Shack ProjectOps | Python + .NET + PostgreSQL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="background-grid"></div>
+
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="brand-mark">DS</div>
+      <div>
+        <div class="eyebrow">DEVOPS SHACK</div>
+        <h1>ProjectOps Studio</h1>
+      </div>
+    </div>
+    <div class="stack-pill">
+      <span>Python</span><b>→</b><span>.NET</span><b>→</b><span>PostgreSQL</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero panel">
+      <div>
+        <span class="kicker">THREE-TIER CRUD APPLICATION</span>
+        <h2>Track DevOps projects across one clean operations dashboard.</h2>
+        <p>The Python presentation tier talks to the ASP.NET Core API, and the .NET backend persists every project in PostgreSQL.</p>
+      </div>
+      <button class="primary-btn" id="openCreateBtn">+ Add Project</button>
+    </section>
+
+    <section class="stats-grid" id="statsGrid">
+      <article class="stat-card"><span>Total Projects</span><strong id="statTotal">—</strong></article>
+      <article class="stat-card"><span>Active</span><strong id="statActive">—</strong></article>
+      <article class="stat-card"><span>Completed</span><strong id="statCompleted">—</strong></article>
+      <article class="stat-card"><span>Average Progress</span><strong id="statProgress">—</strong></article>
+    </section>
+
+    <section class="toolbar panel">
+      <div class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Search title, owner, category...">
+      </div>
+      <select id="statusFilter"><option value="">All statuses</option></select>
+      <select id="categoryFilter"><option value="">All categories</option></select>
+      <select id="difficultyFilter"><option value="">All levels</option></select>
+      <button class="ghost-btn" id="refreshBtn">Refresh</button>
+    </section>
+
+    <section class="content-grid">
+      <div class="panel table-panel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">PROJECT INVENTORY</span>
+            <h3>Projects</h3>
+          </div>
+          <span class="count-badge" id="projectCount">0 projects</span>
+        </div>
+
+        <div id="errorBanner" class="error-banner hidden"></div>
+        <div id="emptyState" class="empty-state hidden">
+          <div class="empty-icon">◇</div>
+          <h4>No projects found</h4>
+          <p>Change your filters or add a new DevOps project.</p>
+        </div>
+
+        <div class="project-list" id="projectList"></div>
+      </div>
+
+      <aside class="panel architecture-panel">
+        <span class="eyebrow">RUNTIME FLOW</span>
+        <h3>How this app is connected</h3>
+        <div class="tier-flow">
+          <div class="tier-card python-tier">
+            <span class="tier-index">01</span>
+            <strong>Python / Flask</strong>
+            <small>Presentation tier</small>
+            <p>Serves the UI and proxies browser API calls.</p>
+          </div>
+          <div class="flow-arrow">↓ HTTP/JSON</div>
+          <div class="tier-card dotnet-tier">
+            <span class="tier-index">02</span>
+            <strong>ASP.NET Core</strong>
+            <small>Application tier</small>
+            <p>Validates requests and performs CRUD operations.</p>
+          </div>
+          <div class="flow-arrow">↓ EF Core / SQL</div>
+          <div class="tier-card postgres-tier">
+            <span class="tier-index">03</span>
+            <strong>PostgreSQL</strong>
+            <small>Data tier</small>
+            <p>Stores projects persistently in a relational table.</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow" id="modalEyebrow">NEW RECORD</span>
+          <h3 id="modalTitle">Add Project</h3>
+        </div>
+        <button class="icon-btn" id="closeModalBtn" aria-label="Close">×</button>
+      </div>
+
+      <form id="projectForm">
+        <input type="hidden" id="projectId">
+        <div class="form-grid">
+          <label class="full">Project title
+            <input id="title" maxlength="120" required placeholder="e.g. GitOps Production Platform">
+          </label>
+          <label>Category
+            <select id="category" required></select>
+          </label>
+          <label>Difficulty
+            <select id="difficulty" required></select>
+          </label>
+          <label>Status
+            <select id="status" required></select>
+          </label>
+          <label>Owner
+            <input id="owner" maxlength="80" required placeholder="Platform Team">
+          </label>
+          <label class="full">Repository URL
+            <input id="repositoryUrl" type="url" maxlength="300" placeholder="https://github.com/...">
+          </label>
+          <label class="full">Description
+            <textarea id="description" rows="4" maxlength="800" required placeholder="What does this project build or automate?"></textarea>
+          </label>
+          <label class="full">Progress <span id="progressValue">35%</span>
+            <input id="progress" type="range" min="0" max="100" value="35">
+          </label>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="ghost-btn" id="cancelBtn">Cancel</button>
+          <button type="submit" class="primary-btn" id="saveBtn">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

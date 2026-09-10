@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# .NET
+**/bin/
+**/obj/
+.vs/
+
+# Environment/local files
+.env
+*.user
+*.suo
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

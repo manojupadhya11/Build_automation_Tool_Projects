@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: projectops-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-projectops}
+      POSTGRES_USER: ${POSTGRES_USER:-projectops}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-projectops123}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-projectops} -d ${POSTGRES_DB:-projectops}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build:
+      context: ./backend-dotnet
+    container_name: projectops-dotnet-backend
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=${POSTGRES_DB:-projectops};Username=${POSTGRES_USER:-projectops};Password=${POSTGRES_PASSWORD:-projectops123}
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health >/dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  frontend:
+    build:
+      context: ./frontend-python
+    container_name: projectops-python-frontend
+    environment:
+      BACKEND_URL: http://backend:8080
+      PORT: 5000
+      FLASK_ENV: production
+    ports:
+      - "${FRONTEND_PORT:-5000}:5000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
